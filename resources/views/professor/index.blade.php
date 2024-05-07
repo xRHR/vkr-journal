@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('title', 'Панель администратора')
+@section('title', 'Научрук')
 
 @section('custom styles')
 
@@ -8,7 +8,7 @@
 
 @section('content')
 
-<p>здарова, админ</p>
+<p>здарова, научрук</p>
 
 @endsection
 
