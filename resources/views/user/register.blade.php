@@ -17,7 +17,7 @@
 <h1 class="h3 mb-2 text-gray-800">Регистрация пользователей</h1>
 <p class="mb-4">Введите e-mail пользователя и выберите роль, затем нажмите "Добавить". Новый пользователь появится в таблице ниже. Чтобы убрать пользователя из таблицы, выберите строку и нажмите "Удалить". После того как вы добавили пользователей нажмите "Регистрация". Введенные пользователи будут зарегистрированы и на e-mail будут отправлены данные для входа.</p>
 {{-- action="/admin/register" method="POST" --}}
-<form id="user_registration" name="user_registration" action="/register" method="POST">
+<form id="user_registration" name="user_registration" action="{{ route('registerForm') }}" method="POST">
     @csrf
     <div class="col-lg-7">
         <div class="form-group row">
@@ -136,7 +136,7 @@ document.querySelector('#remove_selected_user').addEventListener('click', remove
 var ddd = document.querySelector('#user_registration');
 document.querySelector('#save').addEventListener('click', () => {
     if (tableData.length != 0) {
-        $.ajax("/register", {
+        $.ajax("{{ route('registerForm') }}", {
             method: "POST",
             data: {
                 array: JSON.stringify(tableData)

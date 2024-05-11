@@ -37,7 +37,7 @@
                     @foreach ($plans as $plan)
                         <tr>
                             <td>{{ date('d.m.Y', strtotime($plan->created_at)) }}</td>
-                            <td><a href="/professor/plan/{{ $plan->id }}">{{ $plan->title }}</a></td>
+                            <td><a href="{{ route('viewPlan', $plan->id) }}">{{ $plan->title }}</a></td>
                             <td>{{ $plan->descriptionShort() }}</td>
                             <td>{{ $plan->owner->fullnameShort() }}</td>
                         </tr>

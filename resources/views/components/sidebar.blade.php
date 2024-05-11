@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="/redirect/homepage">
+        <a class="nav-link" href="{{ route('redirect.homepage') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>На главную</span></a>
     </li>
@@ -29,14 +29,14 @@
             Пользователи
         </div>
         <li class="nav-item">
-            <a class="nav-link" href="/user-list">
+            <a class="nav-link" href="{{ route('userList') }}">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Список пользователей</span></a>
         </li>
 
         @can('create', App\Models\User::class)
         <li class="nav-item">
-            <a class="nav-link" href="/register">
+            <a class="nav-link" href="{{ route('registerForm') }}">
                 <i class="fas fa-fw fa-user-plus"></i>
                 <span>Регистрация</span></a>
         </li>
@@ -55,13 +55,13 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="/professor/{{ auth()->user()->id }}/plans">
+            <a class="nav-link" href="{{ route('viewPlans', auth()->user()->id) }}">
                 <i class="fas fa-fw fa-list"></i>
                 <span>Список планов</span></a>
         </li>
         @can('create', App\Models\Plan::class)
         <li class="nav-item">
-            <a class="nav-link" href="/professor/create-plan">
+            <a class="nav-link" href="{{ route('createPlanForm') }}">
                 <i class="fas fa-fw fa-plus"></i>
                 <span>Создать новый план</span></a>
         </li>
@@ -79,7 +79,7 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="/professor/students">
+            <a class="nav-link" href="{{ route('professor.viewStudents') }}">
                 <i class="fas fa-solid fa-user-graduate"></i>
                 <span>Список дипломников</span></a>
         </li>

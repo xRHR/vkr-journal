@@ -18,15 +18,15 @@ class RedirectController extends Controller
             $flash_msg = session('failure');
         }
         if (!auth()->check()) {
-            return redirect('/login')->with($success ? 'success' : 'failure', $flash_msg);
+            return redirect()->route('login')->with($success ? 'success' : 'failure', $flash_msg);
         }
         switch (auth()->user()->status->title) {
             case 'Администратор':
-                return redirect('/admin')->with($success ? 'success' : 'failure', $flash_msg);
+                return redirect()->route('admin.index')->with($success ? 'success' : 'failure', $flash_msg);
             case 'Студент':
-                return redirect('/student')->with($success ? 'success' : 'failure', $flash_msg);
+                return redirect()->route('student.index')->with($success ? 'success' : 'failure', $flash_msg);
             case 'Научный руководитель':
-                return redirect('/professor')->with($success ? 'success' : 'failure', $flash_msg);
+                return redirect()->route('professor.index')->with($success ? 'success' : 'failure', $flash_msg);
         }
     }
 }

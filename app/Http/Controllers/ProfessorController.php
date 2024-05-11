@@ -28,7 +28,7 @@ class ProfessorController extends Controller
 
         $newPlan = Plan::create($incomingFields);
 
-        return redirect("/professor/plan/{$newPlan->id}")->with('success', 'План ' . $newPlan->title . ' создан');
+        return redirect()->route('viewPlan', $newPlan->id)->with('success', 'План ' . $newPlan->title . ' создан');
     }
     public function viewPlan(Plan $plan)
     {
@@ -54,7 +54,7 @@ class ProfessorController extends Controller
 
         $plan->update($incomingFields);
 
-        return redirect("/professor/plan/{$plan->id}")->with('success', 'План ' . $plan->title . ' обновлен');
+        return redirect()->route('viewPlan', $plan->id)->with('success', 'План ' . $plan->title . ' обновлен');
     }
     public function editPlanItemsForm(Request $request, Plan $plan)
     {

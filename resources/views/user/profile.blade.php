@@ -102,7 +102,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Научный руководитель</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <a href="/profile/{{ $user->professor->id }}">{{ $user->professor->fullnameShort() }}</a>
+                            <a href="{{ route('profile', $user->professor->id) }}">{{ $user->professor->fullnameShort() }}</a>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -136,7 +136,7 @@
 </div>
 
 @can('update', $user)
-<a href="/profile/{{ $user->id }}/edit" class="btn btn-primary btn-icon-split m-2">
+<a href="{{ route('editProfileForm', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
     <span class="icon text-white-50">
         <i class="fa-solid fa-pen-to-square"></i>
     </span>

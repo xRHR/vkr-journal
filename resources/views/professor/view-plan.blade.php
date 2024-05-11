@@ -24,7 +24,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Владелец</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"><a href="/profile/{{ $plan->owner->id }}">{{ $plan->owner->fullname() }}</a></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><a href="{{ route('profile', $plan->owner->id) }}">{{ $plan->owner->fullname() }}</a></div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-solid fa-user-tie fa-2x text-gray-300"></i>
@@ -68,7 +68,7 @@
 <div class="row">
     <div class="m-2">
         <div class="form-group">
-            <a href="/professor/edit-plan/{{ $plan->id }}" id="edit_plan" type="button" class="btn btn-primary btn-icon-split mt-3">
+            <a href="{{ route('editPlanForm', $plan->id) }}" id="edit_plan" type="button" class="btn btn-primary btn-icon-split mt-3">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
@@ -79,7 +79,7 @@
 
     <div class="m-2">
         <div class="form-group">
-            <a href="/professor/plan/{{ $plan->id }}/edit-items" id="edit_plan" type="button" class="btn btn-primary btn-icon-split mt-3">
+            <a href="{{ route('editPlanItemsForm', $plan->id) }}" id="edit_plan" type="button" class="btn btn-primary btn-icon-split mt-3">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-list-check"></i>
                 </span>

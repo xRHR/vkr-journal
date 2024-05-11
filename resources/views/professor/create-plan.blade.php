@@ -10,7 +10,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Создание нового плана работ ВКР</h1>
 
-<form id="plan_creation" name="plan_creation" action="/professor/create-plan" method="POST">
+<form id="plan_creation" name="plan_creation" action="{{ route('createPlan') }}" method="POST">
     @csrf
     <div class="col-lg-7">
         <div class="form-group col">

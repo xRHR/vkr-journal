@@ -10,7 +10,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Изменение плана работ ВКР</h1>
 
-<form id="edit_plan" name="edit_plan" action="/professor/edit-plan/{{ $plan->id }}" method="POST">
+<form id="edit_plan" name="edit_plan" action="{{ route('editPlan', $plan->id) }}" method="POST">
     @csrf
     <div class="col-lg-7">
         <div class="form-group col">

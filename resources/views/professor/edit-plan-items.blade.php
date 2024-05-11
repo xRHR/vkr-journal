@@ -17,7 +17,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Редактирование содержания плана работ ВКР</h1>
 
-<form id="edit_plan_items" name="edit_plan_items" action="/professor/plan/{{ $plan->id }}/edit-items" method="POST">
+<form id="edit_plan_items" name="edit_plan_items" action="{{ route('editPlanItems', $plan->id) }}" method="POST">
     @csrf
     <div class="col-lg-7">
         <div class="form-group col">
@@ -168,7 +168,7 @@ document.querySelector('#remove_item').addEventListener('click', remove_item);
 var ddd = document.querySelector('#edit_plan_items');
 document.querySelector('#save').addEventListener('click', () => {
     if (tableData.length != 0) {
-        $.ajax("/professor/plan/{{ $plan->id }}/edit-items", {
+        $.ajax("{{ route('editPlanItems', $plan->id) }}", {
             method: "POST",
             data: {
                 array: JSON.stringify(tableData)

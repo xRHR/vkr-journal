@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function loginForm() {
         if (auth()->check()) {
-            return redirect('/redirect/homepage');
+            return redirect()->route('redirect.homepage');
         }
         return view('user.login');
     }
@@ -27,11 +27,11 @@ class UserController extends Controller
             return redirect()->back()->with('failure', 'Неверный логин или пароль');
         }
         $request->session()->regenerate();
-        return redirect('/redirect/homepage')->with('success', 'Вы вошли в систему');
+        return redirect()->route('redirect.homepage')->with('success', 'Вы вошли в систему');
     }
     public function logout(Request $request) {
         auth()->logout();
-        return redirect('/login')->with('success', 'Вы вышли из системы');
+        return redirect()->route('login')->with('success', 'Вы вышли из системы');
     }
     public function userProfile(User $user) {
         return view('user.profile', ['user' => $user]);

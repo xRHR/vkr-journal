@@ -12,7 +12,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Редактирование профиля {{ $user->lastname }} {{ $user->firstname }}</h1>
 </div>
-<form id="edit_profile" name="edit_profile" action="/profile/{{ $user->id }}/edit" method="POST">
+<form id="edit_profile" name="edit_profile" action="{{ route('editProfile', $user->id) }}" method="POST">
     @csrf
 
     <button type="submit" class="btn btn-primary btn-user btn-block col-lg-2 mb-3">

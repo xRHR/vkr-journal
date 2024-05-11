@@ -21,7 +21,7 @@ class PlanPolicy
      */
     public function view(User $user, Plan $plan): bool
     {
-        //
+        return $user->status->title === 'Администратор' || $user->status->title === 'Научный руководитель';
     }
 
     /**

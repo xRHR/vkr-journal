@@ -36,10 +36,10 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td><a href="/profile/{{ $user->id }}">{{ $user->fullname() }}</a></td>
-                            <td><a href="/profile/{{ $user->id }}">{{ $user->email }}</a></td>
+                            <td>{{ $user->fullname() }}</td>
+                            <td><a href="{{ route('profile', $user->id) }}">{{ $user->email }}</a></td>
                             @if($user->plan)
-                            <td><a href="/professor/plan/{{ $user->plan->id }}">{{ $user->plan->title }}</a></td>
+                            <td><a href="{{ route('viewPlan', $user->plan->id) }}">{{ $user->plan->title }}</a></td>
                             @else
                             <td><i>(Отсутствует)</i></td>
                             @endif
