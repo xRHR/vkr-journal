@@ -19,7 +19,7 @@
 
 <form id="edit_plan_items" name="edit_plan_items" action="{{ route('editPlanItems', $plan->id) }}" method="POST">
     @csrf
-    <div class="col-lg-7">
+    <div class="">
         <div class="form-group col">
             <!-- Basic Card Example -->
             <div class="card shadow mb-4">
@@ -34,35 +34,37 @@
                     <label class="mt-3">Дедлайн</label>
                     <input id="datetime" name="deadline" type="datetime" required class="form-control form-control-user" id="inputDescription">
 
-                    <div class="form-group row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <button id="add_item" type="button" class="btn btn-primary btn-icon-split mt-3">
-                                    <span class="icon text-white-50">
-                                        <i class="fa-solid fa-circle-plus"></i>
-                                    </span>
-                                    <span class="text">Добавить</span>
-                                </button>   
+                    <div class="form-group flex-wrap">
+                        <div class="row">
+                            <div class="m-1">
+                                <div class="form-group">
+                                    <button id="add_item" type="button" class="btn btn-primary btn-icon-split mt-3">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-circle-plus"></i>
+                                        </span>
+                                        <span class="text">Добавить</span>
+                                    </button>   
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <button id="remove_item" type="button" class="btn btn-primary btn-icon-split mt-3">
-                                    <span class="icon text-white-50">
-                                        <i class="fa-solid fa-circle-minus"></i>
-                                    </span>
-                                    <span class="text">Удалить</span>
-                                </button>   
+                            <div class="m-1">
+                                <div class="form-group">
+                                    <button id="remove_item" type="button" class="btn btn-primary btn-icon-split mt-3">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-circle-minus"></i>
+                                        </span>
+                                        <span class="text">Удалить</span>
+                                    </button>   
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <button id="save" type="button" class="btn btn-primary btn-icon-split mt-3">
-                                    <span class="icon text-white-50">
-                                        <i class="fas fa-solid fa-floppy-disk"></i>
-                                    </span>
-                                    <span class="text">Сохранить</span>
-                                </button>   
+                            <div class="m-1">
+                                <div class="form-group">
+                                    <button id="save" type="button" class="btn btn-primary btn-icon-split mt-3">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-solid fa-floppy-disk"></i>
+                                        </span>
+                                        <span class="text">Сохранить</span>
+                                    </button>   
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,8 +167,8 @@ table.on('click', 'tbody tr', (e) => {
 
 document.querySelector('#add_item').addEventListener('click', add_item)
 document.querySelector('#remove_item').addEventListener('click', remove_item);
-var ddd = document.querySelector('#edit_plan_items');
 document.querySelector('#save').addEventListener('click', () => {
+    console.log(tableData);
     if (tableData.length != 0) {
         $.ajax("{{ route('editPlanItems', $plan->id) }}", {
             method: "POST",
@@ -178,7 +180,7 @@ document.querySelector('#save').addEventListener('click', () => {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: (data) => {
-                window.location.href = "/professor/plan/{{ $plan->id }}";
+                window.location.href = "{{ route('viewPlan', $plan->id) }}";
             },
             error: (data) => {
                 showAlert('danger', 'Ошибка', data.responseJSON.message, 'fa-circle-xmark')

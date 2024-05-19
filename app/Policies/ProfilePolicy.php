@@ -12,7 +12,8 @@ class ProfilePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->status->title === 'Администратор' || $user->status->title === 'Научный руководитель';
+        //return $user->status->title === 'Администратор' || $user->status->title === 'Научный руководитель';
+        return true;
     }
 
     /**
@@ -20,7 +21,8 @@ class ProfilePolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->status->title === 'Администратор' || $user->status->title === 'Научный руководитель' || $user->id === $model->id || $user->professor_id === $model->id;
+        //return $user->status->title === 'Администратор' || $user->status->title === 'Научный руководитель' || $user->id === $model->id || $user->professor_id === $model->id;
+        return true;
     }
 
     /**

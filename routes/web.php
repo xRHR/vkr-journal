@@ -25,7 +25,7 @@ Route::group(["prefix"=> "vkr-journal"], function () {
 
     Route::get('/', function() {
         return redirect(route('redirect.homepage'));
-    });
+    })->name('index');
 
     Route::get('/redirect/homepage', [RedirectController::class, 'showCorrectHomepage'])->name('redirect.homepage');
 
@@ -58,20 +58,20 @@ Route::group(["prefix"=> "vkr-journal"], function () {
             Route::group(['prefix' => 'student', 'namespace' => 'Student'], function () {
                 Route::get('/', function() {
                     return view('student.index');
-                });
+                })->name('student.index');
             });  
         });
         Route::middleware('can:create,App\Models\Plan')->group(function () {
-            Route::get('/create-plan', [ProfessorController::class,'createPlanForm'])->name('createPlanForm');
-            Route::post('/create-plan', [ProfessorController::class,'createPlan'])->name('createPlan');
+            Route::get('/plan/create', [ProfessorController::class,'createPlanForm'])->name('createPlanForm');
+            Route::post('/plan/create', [ProfessorController::class,'createPlan'])->name('createPlan');
         });
 
-        Route::get('/edit-plan/{plan:id}', [ProfessorController::class, 'editPlanForm'])->name('editPlanForm')->middleware('can:update,plan');
-        Route::post('/edit-plan/{plan:id}', [ProfessorController::class,'editPlan'])->name('editPlan')->middleware('can:update,plan');
+        Route::get('/plan/{plan:id}/edit', [ProfessorController::class, 'editPlanForm'])->name('editPlanForm')->middleware('can:update,plan');
+        Route::post('/plan/{plan:id}/edit', [ProfessorController::class,'editPlan'])->name('editPlan')->middleware('can:update,plan');
 
         Route::get('/plan/{plan:id}', [ProfessorController::class,'viewPlan'])->name('viewPlan')->middleware('can:view,plan');
 
-        Route::get('/{user:id}/plans', [ProfessorController::class,'viewPlans'])->name('viewPlans');
+        Route::get('/profile/{user:id}/plans', [ProfessorController::class,'viewPlans'])->name('viewPlans');
 
         Route::get('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItemsForm'])->name('editPlanItemsForm');
         Route::post('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItems'])->name('editPlanItems');
@@ -83,6 +83,7 @@ Route::group(["prefix"=> "vkr-journal"], function () {
                 })->name('professor.index');
 
                 Route::get('/students', [ProfessorController::class,'viewStudents'])->name('professor.viewStudents');
+                Route::post('/students/appoint-plan/{plan:id}', [ProfessorController::class,'appointPlan'])->name('professor.appointPlan')->middleware('can:update,plan');
             });
         });
     });

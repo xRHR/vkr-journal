@@ -25,9 +25,9 @@ class Plan extends Model
     public function descriptionShort()
     {
         $description = $this->description;
-        if (strlen($description) > 20) {
-            $description = substr($description, 0, 20) . '...';
-        }
+        // if (strlen($description) > 40) {
+        //     $description = substr($description, 0, 40) . '...';
+        // }
         return $description;
     }
 }

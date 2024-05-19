@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_progress', function (Blueprint $table) {
+        Schema::create('invites', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id');
-            $table->foreignId('plan_item_id');
-            $table->date('done_at')->nullable();
-            $table->boolean('confirmed')->default(false);
+            $table->unsignedBigInteger('inviter_id');
+            $table->foreign('inviter_id')->references('id')->on('users');
+            $table->unsignedBigInteger('invitee_id');
+            $table->foreign('invitee_id')->references('id')->on('users');
+            $table->boolean('accepted')->default(0);
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plan_progress');
+        Schema::dropIfExists('invites');
     }
 };

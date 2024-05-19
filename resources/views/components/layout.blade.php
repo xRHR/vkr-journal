@@ -10,9 +10,10 @@
     @yield('custom styles')
 
 </head>
+
 <body id="page-top">
     <!-- Page Wrapper -->
-    <div id="wrapper">    
+    <div id="wrapper">
 
         @include('components.sidebar')
 
@@ -23,7 +24,7 @@
             <div id="content">
 
                 @include('components.topbar')
-                
+
                 @include('components.flash-message')
 
                 <!-- Begin Page Content -->
@@ -59,8 +60,8 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
     <script>
-    function showAlert(color, title, message, icon) {
-        akert= `<div id="${color}-alert" class="card border-left-${color} shadow h-5 py-2" style="position: absolute; right: 2%; bottom: 5%;z-index: 9999;">
+        function showAlert(color, title, message, icon) {
+            akert = `<div id="${color}-alert" class="card border-bottom-${color} shadow h-5 py-2" style="position: absolute; right: 2%; bottom: 5%;z-index: 9999;">
     <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -74,17 +75,20 @@
         </div>
     </div>
         </div>`;
-        function hideAlert() {
-            const alert = document.getElementById(`${color}-alert`);
-            alert.remove();
+
+            function hideAlert() {
+                const alert = document.getElementById(`${color}-alert`);
+                alert.remove();
+            }
+
+            // Hide the alert after 3 seconds
+            setTimeout(hideAlert, 3000);
+            document.querySelector('#page-top').insertAdjacentHTML('beforeend', akert);
         }
-    
-        // Hide the alert after 3 seconds
-        setTimeout(hideAlert, 3000);
-        document.querySelector('#page-top').insertAdjacentHTML('beforeend', akert);
-    }
     </script>
     @yield('custom scripts')
+    @livewire('livewire-ui-modal')
+    @livewireScripts
 </body>
 
 </html>

@@ -84,6 +84,17 @@ class ProfessorController extends Controller
     }
     public function viewStudents(Request $request)
     {
-        return view('professor.students', ['users' => auth()->user()->students]);
+        return view('professor.students', ['users' => auth()->user()->students, 'plans' => auth()->user()->plans]);
+    }
+    public function appointPlan(Request $request, Plan $plan)
+    {
+        $student_ids = json_decode($request->array, true);
+        foreach ($student_ids as $student_id) {
+            $user_student = User::where('id', $student_id)->first();
+            if ($user_student->professor->id == auth()->user()->id || auth()->user()->status->title == 'Администратор') {
+                $user_student->plan_id = $plan->id;
+                $user_student->save();
+            }
+        }
     }
 }
