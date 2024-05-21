@@ -61,18 +61,18 @@
     </div>
 </div> --}}
 
-<li wire:poll.10000ms class="nav-item dropdown no-arrow mx-1">
+<li wire:poll.500ms class="nav-item dropdown no-arrow mx-1">
     <button wire:click="toggleShow" class="nav-link dropdown-toggle" type="button">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
         <span
             class="{{ $user->unreadNotifications->count() > 0 ? 'badge badge-danger badge-counter' : '' }}">{{ $user->unreadNotifications->count() > 0 ? $user->unreadNotifications->count() : '' }}</span>
-</button>
+    </button>
     <!-- Dropdown - Alerts -->
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in {{ $isShow ? 'show' : '' }}">
-        <h6 class="dropdown-header">
-            Alerts Center
-        </h6>
+    <div wire:click.away="handleClickAway" class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in {{ $isShow ? 'show' : '' }}">
+        <div class="dropdown-header">
+            Уведомления
+        </div>
         @if ($user->unreadNotifications->count() == 0)
             <div class="dropdown-item d-flex align-items-center">
                 <div class="row align-items-center">
@@ -82,18 +82,22 @@
                 </div>
             </div>
         @endif
-        @foreach ($user->unreadNotifications as $notification)
-            <a class="dropdown-item d-flex align-items-center" href="{{ $notification->data['link'] }}">
-                <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
+        <div class="overflow-y-auto" style="max-height: 30vh">
+            @foreach ($user->unreadNotifications as $notification)
+                <a class="dropdown-item d-flex align-items-center" href="{{ $notification->data['link'] }}">
+                    <div>
+                        <div class="small text-gray-500">{{ $notification->created_at }}</div>
+                        <span>{!! $notification->data['description'] !!}</span>
                     </div>
-                </div>
-                <div>
-                    <div class="small text-gray-500">{{ $notification->created_at }}</div>
-                    <span>{!! $notification->data['description'] !!}</span>
-                </div>
-            </a>
-        @endforeach
+                </a>
+            @endforeach
+        </div>
+        @if ($user->unreadNotifications->count() > 0)
+            <div class="card-actions">
+                <button class="btn btn-secondary btn-block" wire:click="markAsRead">
+                    Пометить, как прочитанные
+                </button>
+            </div>
+        @endif
     </div>
 </li>

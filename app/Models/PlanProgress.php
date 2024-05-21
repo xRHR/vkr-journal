@@ -12,6 +12,9 @@ class PlanProgress extends Model
     protected $fillable = [
         'user_id',
         'plan_item_id',
-        'done_at'
     ];
+    public function planItem()
+    {
+        return $this->belongsTo(PlanItem::class);
+    }
 }

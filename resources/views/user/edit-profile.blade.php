@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-sm-4 mb-3 mb-sm-0">
                         <label>Имя:</label>
-                        <input type="text" class="form-control" name="firstname_genitive" value="{{ $user->miscInfo->firtsname_genitive }}">
+                        <input type="text" class="form-control" name="firstname_genitive" value="{{ $user->miscInfo->firstname_genitive }}">
                     </div>
                     <div class="col-sm-4 mb-3 mb-sm-0">
                         <label>Отчество:</label>

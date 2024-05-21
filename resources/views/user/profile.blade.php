@@ -157,11 +157,38 @@
             $user->status->title == 'Студент' &&
                 $user->professor == null &&
                 auth()->user()->status->title == 'Научный руководитель')
-            <button onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}}})" class="btn btn-primary btn-icon-split m-2">
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}}})"
+                class="btn btn-primary btn-icon-split m-2">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-thumbtack"></i>
                 </span>
                 <span class="text">Прикрепить</span>
+            </button>
+        @endif
+        @if (
+            $user->status->title == 'Научный руководитель' &&
+                auth()->user()->professor == null &&
+                auth()->user()->status->title == 'Студент')
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}}})"
+                class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-thumbtack"></i>
+                </span>
+                <span class="text">Прикрепиться</span>
+            </button>
+        @endif
+        @if ($user->professor_id == auth()->user()->id)
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}}})"
+                class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <div class="rotate-n-15">
+                        <i class="fa-solid fa-thumbtack"></i>
+                    </div>
+                </span>
+                <span class="text">Открепить</span>
             </button>
         @endif
     </div>
@@ -211,9 +238,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-
     </div>
 
 @endsection

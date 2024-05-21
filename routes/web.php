@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\MustBeStudent;
@@ -19,7 +20,7 @@ use App\Http\Controllers\ProfessorController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::group(["prefix"=> "vkr-journal"], function () {
+//Route::group(["prefix"=> "vkr-journal"], function () {
     Route::get('/login', [UserController::class, 'loginForm'])->name('loginForm');
     Route::post('/login', [UserController::class, 'login'])->name('login');
 
@@ -43,6 +44,8 @@ Route::group(["prefix"=> "vkr-journal"], function () {
             Route::get('/register', [AdminController::class, 'registerForm'])->name('registerForm');
             Route::post('/register', [AdminController::class, 'registerUsers'])->name('register');
 
+        });
+        Route::middleware('can:viewAny,App\Models\User')->group(function () {
             Route::get('/user-list', [AdminController::class, 'getUsers'])->name('userList');
         });
 
@@ -73,6 +76,8 @@ Route::group(["prefix"=> "vkr-journal"], function () {
 
         Route::get('/profile/{user:id}/plans', [ProfessorController::class,'viewPlans'])->name('viewPlans');
 
+        Route::get('/profile/{user:id}/plan-progress', [StudentController::class,'viewPlanProgress'])->name('viewPlanProgress');
+
         Route::get('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItemsForm'])->name('editPlanItemsForm');
         Route::post('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItems'])->name('editPlanItems');
 
@@ -87,4 +92,4 @@ Route::group(["prefix"=> "vkr-journal"], function () {
             });
         });
     });
-});
+//});

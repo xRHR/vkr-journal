@@ -12,7 +12,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Список планов работ</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Список планов работ {{ $plans[0]->owner->fullnameShort() }}</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -22,7 +22,6 @@
                         <th>Создан</th>
                         <th>Название</th>
                         <th>Описание</th>
-                        <th>Владелец</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -30,7 +29,6 @@
                         <th>Создан</th>
                         <th>Название</th>
                         <th>Описание</th>
-                        <th>Владелец</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -39,7 +37,6 @@
                             <td>{{ date('d.m.Y', strtotime($plan->created_at)) }}</td>
                             <td><a href="{{ route('viewPlan', $plan->id) }}">{{ $plan->title }}</a></td>
                             <td>{{ $plan->descriptionShort() }}</td>
-                            <td>{{ $plan->owner->fullnameShort() }}</td>
                         </tr>
                     @endforeach
                 </tbody>

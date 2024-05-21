@@ -87,4 +87,20 @@ class User extends Authenticatable
     public function plan() {
         return $this->belongsTo(Plan::class,'plan_id');
     }
+    public function planProgress() {
+        return $this->hasMany(PlanProgress::class,'user_id');
+    }
+    public function updatePlanProgress() {
+        $plan_items_ids = $this->plan->items->pluck('id')->toArray();
+        $plan_progress_plan_item_ids = $this->planProgress()->pluck('plan_item_id')->toArray();
+        $items_that_still_exist = array_intersect($plan_items_ids, $plan_progress_plan_item_ids);
+        $items_that_are_new = array_diff($plan_items_ids, $plan_progress_plan_item_ids);
+        $items_that_are_deleted = array_diff($plan_progress_plan_item_ids, $plan_items_ids);
+        dd($items_that_still_exist, $items_that_are_new, $items_that_are_deleted);
+        // foreach ($this->plan->items as $item) {
+        //     if (PlanProgress::where('user_id', $this->id)->where('plan_item_id', $item->id)->count() == 0) {
+                
+        //     }
+        // }
+    }
 }

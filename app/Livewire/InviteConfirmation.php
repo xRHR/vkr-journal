@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
-use LivewireUI\Modal\ModalComponent;
 use App\Models\User;
 use App\Models\Invite;
+use LivewireUI\Modal\ModalComponent;
+use Illuminate\Support\Facades\Notification;
 
 class InviteConfirmation extends ModalComponent
 {
-    public $inviter, $invitee;
+    public $inviter, $invitee, $you_already_invited, $you_are_invited;
     public function render()
     {
         return view('livewire.invite-confirmation');
@@ -17,15 +18,38 @@ class InviteConfirmation extends ModalComponent
     {
         $this->inviter = User::find($inviter_id);
         $this->invitee = User::find($invitee_id);
+        $this->you_already_invited = count(Invite::where('inviter_id', $this->inviter->id)->where('invitee_id', $this->invitee->id)->get());
+        $this->you_are_invited = count(Invite::where('inviter_id', $this->invitee->id)->where('invitee_id', $this->inviter->id)->get());
     }
     public function createInvite()
     {
-        Invite::create([
-            'inviter_id' => $this->inviter->id,
-            'invitee_id' => $this->invitee->id,
-            'accepted' => 0
-        ]);
-        $this->invitee->notify(new \App\Notifications\InviteNotification($this->inviter));
+        if ($this->you_are_invited) {
+            $student = null;
+            if ($this->inviter->status->title == "Студент") {
+                $student = $this->inviter;
+                Invite::where('invitee_id', $this->inviter->id)->delete();
+            } else {
+                $student = $this->invitee;
+            }
+            Invite::where('inviter_id', $student->id)->delete();
+            Invite::where('invitee_id', $student->id)->delete();
+            $student->professor_id = ($student == $this->inviter ? $this->invitee : $this->inviter)->id;
+            $student->save();
+        } else {
+            $notif = new \App\Notifications\InviteNotification($this->inviter);
+            Notification::send($this->invitee, $notif);
+            
+            Invite::create([
+                'inviter_id' => $this->inviter->id,
+                'invitee_id' => $this->invitee->id,
+            ]);
+        }
         $this->closeModal();
+    }
+    public function cancelInvite()
+    {
+        if ($this->you_already_invited) {
+
+        }
     }
 }

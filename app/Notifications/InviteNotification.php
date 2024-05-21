@@ -36,9 +36,16 @@ class InviteNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        $description = "";
+        if ($this->inviter->status->title == "Научный руководитель") {
+            $description = "Вас пригласили прикрепиться к научному руководителю ". $this->inviter->fullnameShort();
+        } else {
+            $description = "Студент ". $this->inviter->fullnameShort() . " запросил прикрепление к Вам.";
+        }
         return [
             'link' => route('profile', $this->inviter->id),
-            'description' => 'Вы произвели вход в '. now()->format('d.m.Y H:i:s'),
+            'description' => $description,
+            'id'     =>  $this->id,
         ];
     }
 }

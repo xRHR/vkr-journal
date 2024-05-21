@@ -13,14 +13,17 @@ class Plan extends Model
     protected $fillable = [
         'title',
         'description',
-        'owner_id'
+        'owner_id',
+        'is_deleted',
     ];
 
-    public function items() {
-        return $this->hasMany(PlanItem::class, 'plan_id');
+    public function items()
+    {
+        return $this->hasMany(PlanItem::class, 'plan_id')->where('is_deleted', 0);
     }
-    public function owner() {
-        return $this->belongsTo(User::class,'owner_id');
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
     public function descriptionShort()
     {
@@ -29,5 +32,9 @@ class Plan extends Model
         //     $description = substr($description, 0, 40) . '...';
         // }
         return $description;
+    }
+    public function participants()
+    {
+        return $this->hasMany(User::class, 'plan_id');
     }
 }

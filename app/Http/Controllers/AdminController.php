@@ -29,10 +29,10 @@ class AdminController extends Controller
         $already_exist = [];
         foreach ($new_users_table as $new_user) {
             $pwd = Str::random(12);
-            $file = 'E:\laravel\пароли.txt';
+            $file = '/var/www/vkr-journal/passwords';
             $data = $new_user['email'] . ' ' . $pwd;
             file_put_contents($file, $data . PHP_EOL, FILE_APPEND);
-
+            
             $user = new User();
             $user_misc_info = new UserMiscInfo();
 

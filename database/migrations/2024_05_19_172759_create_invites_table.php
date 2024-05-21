@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('inviter_id')->references('id')->on('users');
             $table->unsignedBigInteger('invitee_id');
             $table->foreign('invitee_id')->references('id')->on('users');
-            $table->boolean('accepted')->default(0);
         });
     }
 

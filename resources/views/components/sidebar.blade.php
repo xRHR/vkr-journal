@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-book-open"></i>
+            <img src="/vkr-journal-logo.png" class="w-75">
         </div>
         <div class="sidebar-brand-text mx-3">Журнал ВКР</div>
     </a>
@@ -85,6 +85,21 @@
         </li>
     @endif
 
+    @if(auth()->user()->status->title == 'Студент')
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            ВКР
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('viewPlanProgress', auth()->user()->id) }}">
+                <i class="fas fa-fw fa-list"></i>
+                <span>План работ</span></a>
+        </li>
+    @endif
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

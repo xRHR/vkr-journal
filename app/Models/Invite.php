@@ -12,6 +12,6 @@ class Invite extends Model
     protected $fillable = [
         'inviter_id',
         'invitee_id',
-        'accepted',
+        'notification_id',
     ];
 }

@@ -26,4 +26,9 @@ class RealTimeNotifications extends Component
     {
         return view('livewire.real-time-notifications');
     }
+    public function handleClickAway() 
+    {
+        $this->isShow = false;
+        $this->render();
+    }
 }

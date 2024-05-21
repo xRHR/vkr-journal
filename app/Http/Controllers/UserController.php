@@ -60,6 +60,6 @@ class UserController extends Controller
         $user->save();
         $user->miscInfo->save();
 
-        return back()->with('success', 'Профиль обновлен');
+        return redirect()->route('profile', $user)->with('success', 'Профиль обновлен');
     }
 }

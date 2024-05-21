@@ -32,8 +32,8 @@
                     <label class="mt-3">Описание</label>
                     <textarea name="itemDescription" required class="form-control form-control-user" id="inputItemDescription"></textarea>
                     <label class="mt-3">Дедлайн</label>
-                    <input id="datetime" name="deadline" type="datetime" required class="form-control form-control-user" id="inputDescription">
-
+                    <input id="datetime" name="deadline" type="datetime" required class="form-control form-control-user">
+                    
                     <div class="form-group flex-wrap">
                         <div class="row">
                             <div class="m-1">
@@ -53,6 +53,16 @@
                                             <i class="fa-solid fa-circle-minus"></i>
                                         </span>
                                         <span class="text">Удалить</span>
+                                    </button>   
+                                </div>
+                            </div>
+                            <div class="m-1">
+                                <div class="form-group">
+                                    <button id="remove_item" type="button" class="btn btn-primary btn-icon-split mt-3">
+                                        <span class="icon text-white-50">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </span>
+                                        <span class="text">Редактировать</span>
                                     </button>   
                                 </div>
                             </div>
@@ -84,6 +94,7 @@
                                     <th>Дедлайн</th>
                                     <th>Название пункта</th>
                                     <th>Описание</th>
+                                    <th style="display:none;">ID</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -91,6 +102,7 @@
                                     <th>Дедлайн</th>
                                     <th>Название пункта</th>
                                     <th>Описание</th>
+                                    <th style="display:none;">ID</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -99,6 +111,7 @@
                                         <td>{{ $item->deadline }}</td>
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
+                                        <td style="display:none;">{{ $item->id }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -122,6 +135,7 @@
 tableData = [
     @foreach ($plan_items as $item)
         {
+            "id" : "{{ $item->id }}",
             "deadline" : "{{ $item->deadline }}",
             "title" : "{{ $item->title }}",
             "description" : "{{ $item->description }}"
@@ -150,6 +164,9 @@ function remove_item() {
         tableData.splice(selectedRow, 1);
         table.row('.selected').remove().draw(false);
     }
+}
+function edit_item() {
+
 }
 const table = new DataTable('#dataTable');
 
