@@ -5,29 +5,27 @@
         <form wire:submit.prevent="{{ $formAction }}">
     @endif
 
-    <div class=" row p-3 sm:px-3 sm:py-3 w-100">
-        <div class="col-11">
-            @if (isset($title))
-                {{ $title }}
-            @endif
-        </div>
-        <div class="col-1">
-            <div class="row">
-                @if (isset($tools))
+    <div class="row align-items-center justify-content-beetween">
+        <div class="card-header py-3 row col-12">
+            <div class="col-10 align-items-center d-flex">
+                <h6 class="ml-2 font-weight-bold text-primary">
+                    @if (isset($title))
+                        {{ $title }}
+                    @endif
+                </h6>
+            </div>
+            <div class="col-2">
+                <div class="row">
+                    @if (isset($tools))
+                        <div class="col">
+                            {{ $tools }}
+                        </div>
+                    @endif
                     <div class="col">
-                        {{ $tools }}
+                        <button wire:click="$dispatch('closeModal')" class="btn btn-sm">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                @endif
-                <div class="col">
-                    <button wire:click="$dispatch('closeModal')" class="btn btn-icon"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M18 6l-12 12" />
-                            <path d="M6 6l12 12" />
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>
@@ -37,9 +35,9 @@
         <div class="col-12 col-sm-12 col-lg-12">
 
             <div class=" px-1 sm:p-1">
-
-                {{ $content }}
-
+                <div class="card-body">
+                    {{ $content }}
+                </div>
             </div>
 
         </div>

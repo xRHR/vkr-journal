@@ -14,7 +14,8 @@
 @section('content')
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Подопечные дипломники</h1>
+@if ($users[0]->professor_id == auth()->user()->id)
+<h1 class="h3 mb-2 text-gray-800">Ваши подопечные дипломники</h1>
 <p class="mb-4">В таблице представлен список ваших подопечных студентов и выполняемый ими план. Если дипломнику ещё не назначен план, здесь вы можете его назначить. Для этого выберите один из ваших планов в выпадающем меню, выберите одного или несколько дипломников из таблицы и нажмите на кнопку "Назначить". Если у вас пока нет планов, вы можете создать новый или скопировать существующий у других научных руководителей.</p>
 <div class="col-lg-7">
     <div class="form-group row">
@@ -34,6 +35,9 @@
         </div>
     </div>
 </div>
+@else
+<h1 class="h3 mb-2 text-gray-800">Дипломники руководителя {{ $users[0]->professor->fullnameShort() }}</h1>
+@endif
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -125,9 +129,9 @@ function appointPlan() {
     const selectedRows = table.rows('.selected').data();
     const ids = Object.values(selectedRows.map((row) => row[4]));
     const selectedPlan = document.querySelector('select[name="plan"]').value;
-    console.log(ids);
+    console.log(selectedPlan);
     if (ids.length > 0) {
-        $.ajax("{{ route('index') }}" + "/professor/students/appoint-plan/" + selectedPlan, {
+        $.ajax("{{ route('index') }}" + "/profile/{{ auth()->user()->id }}/students/appoint-plan/" + selectedPlan, {
             method: "POST",
             data: {
                 array: JSON.stringify(user_ids)

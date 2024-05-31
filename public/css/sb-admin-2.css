@@ -47,6 +47,15 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+      display: none;
+  }
+  body.sidebar-toggled .sidebar {
+      display: block;
+  }
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

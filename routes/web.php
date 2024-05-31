@@ -31,6 +31,9 @@ use App\Http\Controllers\ProfessorController;
     Route::get('/redirect/homepage', [RedirectController::class, 'showCorrectHomepage'])->name('redirect.homepage');
 
     Route::group(['middleware' => ['auth']], function () {
+        Route::fallback(function(){
+            return view('errors.404');
+        });
 
         Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -73,13 +76,20 @@ use App\Http\Controllers\ProfessorController;
         Route::post('/plan/{plan:id}/edit', [ProfessorController::class,'editPlan'])->name('editPlan')->middleware('can:update,plan');
 
         Route::get('/plan/{plan:id}', [ProfessorController::class,'viewPlan'])->name('viewPlan')->middleware('can:view,plan');
+        Route::get('plan/{plan:id}/copy-to-myself', [ProfessorController::class,'copyPlan'])->name('copyPlan')->middleware([MustBeProfessor::class]);
 
         Route::get('/profile/{user:id}/plans', [ProfessorController::class,'viewPlans'])->name('viewPlans');
 
+        Route::get('/profile/{user:id}/plan-progress/{plan_progress}', [StudentController::class,'viewPlanProgressItem'])->name('viewPlanProgressItem');
+
         Route::get('/profile/{user:id}/plan-progress', [StudentController::class,'viewPlanProgress'])->name('viewPlanProgress');
 
-        Route::get('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItemsForm'])->name('editPlanItemsForm');
-        Route::post('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItems'])->name('editPlanItems');
+        Route::get('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItemsForm'])->name('editPlanItemsForm')->middleware('can:update,plan');
+        Route::post('/plan/{plan:id}/edit-items', [ProfessorController::class,'editPlanItems'])->name('editPlanItems')->middleware('can:update,plan');
+
+        
+        Route::get('/profile/{user:id}/students', [ProfessorController::class,'viewStudents'])->name('viewStudents');
+        Route::post('profile/{user:id}/students/appoint-plan/{plan:id}', [ProfessorController::class,'appointPlan'])->name('appointPlan')->middleware('can:update,plan');
 
         Route::middleware([MustBeProfessor::class])->group(function () {
             Route::group(['prefix' => 'professor', 'namespace' => 'Professor'], function () {
@@ -87,9 +97,13 @@ use App\Http\Controllers\ProfessorController;
                     return view('professor.index');
                 })->name('professor.index');
 
-                Route::get('/students', [ProfessorController::class,'viewStudents'])->name('professor.viewStudents');
-                Route::post('/students/appoint-plan/{plan:id}', [ProfessorController::class,'appointPlan'])->name('professor.appointPlan')->middleware('can:update,plan');
             });
         });
+
+        Route::get('/profile/{user:id}/theses', [StudentController::class,'viewTheses'])->name('viewTheses');
+        Route::get('/thesis/{thesis:id}', [StudentController::class,'viewThesis'])->name('viewThesis');
+        Route::get('/delete-thesis/{thesis:id}', [StudentController::class,'deleteThesis'])->name('deleteThesis');
+
+        Route::get('/thesis/{thesis:id}/chapter/{order}', [StudentController::class,'viewChapter'])->name('viewChapter');
     });
 //});

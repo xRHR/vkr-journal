@@ -133,8 +133,82 @@
     </div>
     @endif
     </div>
-
     <hr>
+    @if ($user->plan_id)
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h2 class="h3 mb-0 text-gray-800">
+                План работ "{{ $user->plan->title }}"
+            </h2>
+        </div>
+        <a href="{{ route('viewPlanProgress', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </span>
+            <span class="text">Посмотреть выполнение</span>
+        </a>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Выполненно
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {{ $user->progressPercentage() }}%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                style="width: {{ $user->progressPercentage() }}%"
+                                                aria-valuenow="{{ $user->progressPercentage() }}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Подтверждено
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {{ $user->progressConfirmedPercentage() }}%</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                style="width: {{ $user->progressConfirmedPercentage() }}%"
+                                                aria-valuenow="{{ $user->progressConfirmedPercentage() }}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-check fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    @endif
     <div class="row">
         @if (!$user->plans->isEmpty())
             <a href="{{ route('viewPlans', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
@@ -144,7 +218,22 @@
                 <span class="text">Планы</span>
             </a>
         @endif
-
+        @if (!$user->students->isEmpty())
+            <a href="{{ route('viewStudents', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </span>
+                <span class="text">Дипломники</span>
+            </a>
+        @endif
+        @if (!$user->theses->isEmpty())
+            <a href="{{ route('viewTheses', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-book"></i>
+                </span>
+                <span class="text">ВКР</span>
+            </a>
+        @endif
         @can('update', $user)
             <a href="{{ route('editProfileForm', $user->id) }}" class="btn btn-primary btn-icon-split m-2">
                 <span class="icon text-white-50">
@@ -152,6 +241,12 @@
                 </span>
                 <span class="text">Редактировать</span>
             </a>
+            <button onclick="Livewire.dispatch('openModal', { component: 'change-password-modal', arguments: {user_id: {{ $user->id }}}})" class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-key"></i>
+                </span>
+                <span class="text">Сменить пароль</span>
+            </button>
         @endcan
         @if (
             $user->status->title == 'Студент' &&
@@ -181,14 +276,26 @@
         @endif
         @if ($user->professor_id == auth()->user()->id)
             <button
-                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}}})"
-                class="btn btn-primary btn-icon-split m-2">
+                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}, detach: true}})"
+                class="btn btn-danger btn-icon-split m-2">
                 <span class="icon text-white-50">
                     <div class="rotate-n-15">
                         <i class="fa-solid fa-thumbtack"></i>
                     </div>
                 </span>
                 <span class="text">Открепить</span>
+            </button>
+        @endif
+        @if ($user->id == auth()->user()->professor_id)
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'invite-confirmation', arguments: {invitee_id: {{ $user->id }}, inviter_id: {{ auth()->user()->id }}, detach: true}})"
+                class="btn btn-danger btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <div class="rotate-n-15">
+                        <i class="fa-solid fa-thumbtack"></i>
+                    </div>
+                </span>
+                <span class="text">Открепиться</span>
             </button>
         @endif
     </div>
@@ -220,12 +327,12 @@
             <!-- Collapsable Card Example -->
             <div class="card shadow">
                 <!-- Card Header - Accordion -->
-                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
-                    aria-expanded="true" aria-controls="collapseCardExample">
+                <a href="#fioGenitive" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                    aria-expanded="true" aria-controls="fioGenitive">
                     <h6 class="m-0 font-weight-bold text-primary">ФИО в родительном падеже</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseCardExample">
+                <div class="collapse show" id="fioGenitive">
                     <div class="card-body">
                         <label>Фамилия: {{ $user->miscInfo->lastname_genitive }}</label>
                     </div>

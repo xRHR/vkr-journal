@@ -12,7 +12,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Список планов работ {{ $plans[0]->owner->fullnameShort() }}</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Список планов работ {{ $user->fullnameShort() }}</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">

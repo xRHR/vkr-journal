@@ -13,11 +13,26 @@
         rel="stylesheet">
     @vite(['resources/css/app.css'])
     <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    {{-- <style>
-     input[type=text]:not(:focus):not(:hover) {
-        border: 0;
-      } --}}
-    </style>
+    
+    <script>
+      // Function to toggle class based on window size
+      function toggleSidebarClass() {
+          var sidebar = document.getElementById("accordionSidebar");
+          if (window.innerWidth < 768) {
+              sidebar.classList.add("toggled");
+          } else {
+              sidebar.classList.remove("toggled");
+          }
+      }
+
+      // Immediately invoke the function to toggle class during initial load
+      (function() {
+          toggleSidebarClass();
+      })();
+
+      // Add event listener to handle window resize
+      window.addEventListener("resize", toggleSidebarClass);
+  </script>
     @livewireStyles

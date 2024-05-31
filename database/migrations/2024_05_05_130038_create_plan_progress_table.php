@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('plan_progress', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('user_id');
-            $table->foreignId('plan_item_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('plan_item_id')->constrained('plan_items')->onDelete('cascade');
             $table->date('done_at')->nullable();
             $table->boolean('confirmed')->default(false);
         });

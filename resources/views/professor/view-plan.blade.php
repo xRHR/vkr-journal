@@ -55,7 +55,8 @@
         @if ($plan->owner_id != auth()->user()->id)
             <div class="m-2">
                 <div class="form-group">
-                    <a href="#" id="save_plan" type="button" class="btn btn-primary btn-icon-split mt-3">
+                    <a method="POST" href="{{ route('copyPlan', $plan->id) }}" id="save_plan" type="button"
+                        class="btn btn-primary btn-icon-split mt-3">
                         <span class="icon text-white-50">
                             <i class="fa-solid fa-floppy-disk"></i>
                         </span>
@@ -68,7 +69,7 @@
         @can('update', $plan)
             <div class="m-2">
                 <div class="form-group">
-                    <a href="{{ route('editPlanForm', $plan->id) }}" id="edit_plan" type="button"
+                    <a href="{{ route('editPlanForm', $plan->id) }}" type="button"
                         class="btn btn-primary btn-icon-split mt-3">
                         <span class="icon text-white-50">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -80,13 +81,25 @@
 
             <div class="m-2">
                 <div class="form-group">
-                    <a href="{{ route('editPlanItemsForm', $plan->id) }}" id="edit_plan" type="button"
+                    <a href="{{ route('editPlanItemsForm', $plan->id) }}" type="button"
                         class="btn btn-primary btn-icon-split mt-3">
                         <span class="icon text-white-50">
                             <i class="fa-solid fa-list-check"></i>
                         </span>
                         <span class="text">Изменить содержание плана</span>
                     </a>
+                </div>
+            </div>
+
+            <div class="m-2">
+                <div class="form-group">
+                    <button onclick="Livewire.dispatch('openModal', { component: 'delete-plan-modal', arguments: {plan_id: {{ $plan->id }}}})" type="button"
+                        class="btn btn-danger btn-icon-split mt-3">
+                        <span class="icon text-white-50">
+                            <i class="fa-solid fa-trash"></i>
+                        </span>
+                        <span class="text">Удалить план</span>
+                    </button>
                 </div>
             </div>
         @endcan
@@ -104,6 +117,7 @@
                             <th>Дедлайн</th>
                             <th>Название</th>
                             <th>Описание</th>
+                            <th>Вложения</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -111,6 +125,7 @@
                             <th>Дедлайн</th>
                             <th>Название</th>
                             <th>Описание</th>
+                            <th>Вложения</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -119,6 +134,13 @@
                                 <td>{{ $item->deadline }}</td>
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->description }}</td>
+                                <td>@foreach ($item->getMedia('attachments') as $attachment)
+                                    <a href="{{ $attachment->getUrl() }}" target="_blank"
+                                        rel="noopener noreferrer">{{ basename($attachment->getUrl()) }}</a>
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach</td>
                             </tr>
                         @endforeach
                     </tbody>

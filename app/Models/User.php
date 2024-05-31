@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -82,25 +83,27 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'professor_id');
     }
     public function plans() {
-        return $this->hasMany(Plan::class,'owner_id');
+        return $this->hasMany(Plan::class,'owner_id')->where('is_deleted', 0);
     }
     public function plan() {
         return $this->belongsTo(Plan::class,'plan_id');
     }
-    public function planProgress() {
-        return $this->hasMany(PlanProgress::class,'user_id');
+    public function planProgresses() {
+        return $this->hasMany(PlanProgress::class, 'user_id')
+            ->join('plan_items', 'plan_progress.plan_item_id', '=', 'plan_items.id')
+            ->orderBy('plan_items.deadline', 'asc')
+            ->select('plan_progress.*'); // Include select to avoid ambiguity in the future
     }
-    public function updatePlanProgress() {
-        $plan_items_ids = $this->plan->items->pluck('id')->toArray();
-        $plan_progress_plan_item_ids = $this->planProgress()->pluck('plan_item_id')->toArray();
-        $items_that_still_exist = array_intersect($plan_items_ids, $plan_progress_plan_item_ids);
-        $items_that_are_new = array_diff($plan_items_ids, $plan_progress_plan_item_ids);
-        $items_that_are_deleted = array_diff($plan_progress_plan_item_ids, $plan_items_ids);
-        dd($items_that_still_exist, $items_that_are_new, $items_that_are_deleted);
-        // foreach ($this->plan->items as $item) {
-        //     if (PlanProgress::where('user_id', $this->id)->where('plan_item_id', $item->id)->count() == 0) {
-                
-        //     }
-        // }
+    public function progressPercentage()
+    {
+        return (int) ($this->planProgresses()->where('done_at', '!=', null)->count() / $this->planProgresses()->count() * 100);
+    }
+    public function progressConfirmedPercentage()
+    {
+        return (int) ($this->planProgresses()->where('confirmed', 1)->count() / $this->planProgresses()->count() * 100);
+    }
+    public function theses()
+    {
+        return $this->hasMany(Thesis::class, 'student_id')->where('is_deleted', 0);
     }
 }

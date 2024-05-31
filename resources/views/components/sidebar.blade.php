@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('redirect.homepage') }}">
         <div class="sidebar-brand-icon">
             <img src="/vkr-journal-logo.png" class="w-75">
         </div>
@@ -79,7 +79,7 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('professor.viewStudents') }}">
+            <a class="nav-link" href="{{ route('viewStudents', auth()->user()->id) }}">
                 <i class="fas fa-solid fa-user-graduate"></i>
                 <span>Список дипломников</span></a>
         </li>
@@ -98,6 +98,12 @@
             <a class="nav-link" href="{{ route('viewPlanProgress', auth()->user()->id) }}">
                 <i class="fas fa-fw fa-list"></i>
                 <span>План работ</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('viewTheses', auth()->user()->id) }}">
+                <i class="fa-solid fa-chalkboard"></i>
+                <span>Выпускные работы</span></a>
         </li>
     @endif
 

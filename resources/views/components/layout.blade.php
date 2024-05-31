@@ -58,7 +58,7 @@
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+    <script src="/js/sb-admin-2.js"></script>
     <script>
         function showAlert(color, title, message, icon) {
             akert = `<div id="${color}-alert" class="card border-bottom-${color} shadow h-5 py-2" style="position: absolute; right: 2%; bottom: 5%;z-index: 9999;">

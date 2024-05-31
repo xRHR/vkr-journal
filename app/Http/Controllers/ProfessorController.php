@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
-use App\Models\PlanProgress;
 use App\Models\User;
 use App\Models\PlanItem;
 use Illuminate\Support\Str;
+use App\Models\PlanProgress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
 
@@ -38,7 +39,7 @@ class ProfessorController extends Controller
     }
     public function viewPlans(User $user)
     {
-        return view('professor.view-plans', ['plans' => $user->plans]);
+        return view('professor.view-plans', ['plans' => $user->plans, 'user' => $user]);
     }
     public function editPlanForm(Request $request, Plan $plan)
     {
@@ -110,11 +111,11 @@ class ProfessorController extends Controller
             $deleted_plan_item->save();
         }
     }
-    public function viewStudents(Request $request)
+    public function viewStudents(Request $request, User $user)
     {
-        return view('professor.students', ['users' => auth()->user()->students, 'plans' => auth()->user()->plans]);
+        return view('professor.students', ['users' => $user->students, 'plans' => $user->plans]);
     }
-    public function appointPlan(Request $request, Plan $plan)
+    public function appointPlan(Request $request, User $user, Plan $plan)
     {
         $student_ids = json_decode($request->array, true);
         foreach ($student_ids as $student_id) {
@@ -139,6 +140,42 @@ class ProfessorController extends Controller
             // Notification::send($user_student, $notif);
             // $notif_id = $notif->toArray($user_student)['id'];
             // dd($notif_id);
+        }
+    }
+    public function copyPlan(Request $request, Plan $plan)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Retrieve the plan to be copied
+            $originalPlan = Plan::findOrFail($plan->id);
+
+            // Create a new plan with the details of the original plan, but change the owner_id
+            $newPlan = $originalPlan->replicate();
+            $newPlan->owner_id = auth()->user()->id;
+            $newPlan->save();
+
+            // Retrieve the plan items that are not deleted
+            $planItems = PlanItem::where('plan_id', $plan->id)
+                                 ->where('is_deleted', false)
+                                 ->get();
+
+            // Copy each plan item to the new plan
+            foreach ($planItems as $item) {
+                $newItem = $item->replicate();
+                $newItem->plan_id = $newPlan->id;
+                $newItem->save();
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return back()->with('success', 'План успешно скопирован!');
+
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of an error
+            DB::rollBack();
+            return back()->with('error', 'Не удалось скопировать план: ' . $e->getMessage());
         }
     }
 }
