@@ -16,7 +16,7 @@
             <span class="icon text-white-50">
                 <i class="fas fa-solid fa-trash"></i>
             </span>
-            <span class="text">Удалить план</span>
+            <span class="text">Удалить файл</span>
         </button>
         <button wire:click="$dispatch('closeModal')" class="btn btn-secondary btn-icon-split mt-3">
             <span class="icon text-white-50">

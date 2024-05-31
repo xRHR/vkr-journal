@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use LivewireUI\Modal\ModalComponent;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\Media;
 
 class DeleteAttachmentModal extends ModalComponent
 {

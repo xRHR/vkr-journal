@@ -20,11 +20,6 @@ class Chapter extends Model implements HasMedia
     {
         return $this->belongsTo(Thesis::class);
     }
-
-    public function versions()
-    {
-        return $this->hasMany(ChapterVersion::class);
-    }
     public function final_version()
     {
         return $this->belongsTo(Media::class, 'final_version_id');

@@ -3,9 +3,11 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ChapterVersions extends Component
 {
+    use WithFileUploads;
     public $chapter, $newAttachment = null;
     public function render()
     {

@@ -1,6 +1,6 @@
 <div>
     <ul>
-        @foreach ($chapter->versions as $version)
+        @foreach ($chapter->getMedia('versions') as $version)
             <li>
                 <div style="
                     @if ($version->uploader->status->title == 'Научный руководитель') background-color: #f8f9fc; @endif">

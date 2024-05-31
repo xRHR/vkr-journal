@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\Media;
 
 class AttachmentsCard extends Component
 {
@@ -59,7 +59,6 @@ class AttachmentsCard extends Component
         ]);
         $this->attachable
             ->addMedia($this->newAttachment)
-            ->withCustomProperties(['uploaded_by' => auth()->user()->id])
             ->toMediaCollection('attachments');
         $this->newAttachment = null;
         $this->refreshAttachments();
