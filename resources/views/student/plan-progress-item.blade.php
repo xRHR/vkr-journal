@@ -89,7 +89,7 @@
                 <div class="collapse show" id="collapseCardExample">
                     <div class="card-body">
                         <b>Дедлайн: </b><label
-                            class="@if ($plan_progress->is_overdue()) text-danger @endif">{{ $plan_progress->plan_item->deadline }}</label><br>
+                            class="@if ($plan_progress->is_overdue()) text-danger @endif">{{ $plan_progress->plan_item->deadline_formatted() }}</label><br>
                         {{ $plan_progress->plan_item->description }}
                     </div>
                 </div>

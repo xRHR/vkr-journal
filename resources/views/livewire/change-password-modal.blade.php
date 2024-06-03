@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="mb-3">
+                        <div class="row mb-3">
                             <div class="col-md-6 col-sm-12">
                                 <label class="form-label">
                                     Новый пароль
@@ -61,7 +61,12 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-outline-primary" type="submit">Сохранить пароль</button>
+                    <button class="btn btn-primary btn-icon-split mt-3" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-solid fa-floppy-disk"></i>
+                        </span>
+                        <span class="text">Сохранить</span>
+                    </button>
                 </div>
             </form>
         </div>

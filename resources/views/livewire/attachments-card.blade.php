@@ -15,8 +15,7 @@
                         <ul>
                             @foreach ($attachments as $attachment)
                                 <li class="mb-3">
-                                    @include('components.single-attachment', ['attachment_path' => $attachment->getUrl(), 'can_delete' => $can_attach, 'attachment_id' => $attachment->id])
-                                    {{-- <livewire:single-attachment attachment_id="{{ $attachment->id }}" can_delete="{{ $can_attach }}" :wire:key="$loop->index + $attachments->count() * $cnt" /> --}}
+                                    @include('components.single-attachment', ['attachment' => $attachment->getUrl(), 'can_delete' => $can_attach])
                                 <hr>
                                 </li>
                             @endforeach

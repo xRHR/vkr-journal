@@ -15,7 +15,7 @@
             </h1>
         </div>
         @foreach ($user->planProgresses as $pp_item)
-            <a href="{{ route('viewPlanProgressItem', ['user' => $user->id, 'plan_progress' => $pp_item->id]) }}">
+            <a class="text-decoration-none" href="{{ route('viewPlanProgressItem', ['user' => $user->id, 'plan_progress' => $pp_item->id]) }}">
                 <div class="mb-4">
                     <div
                         class="card 
@@ -47,7 +47,7 @@
                                     @else
                                         text-primary @endif
                                     text-uppercase mb-1">
-                                        {{ $pp_item->plan_item->deadline }}
+                                        {{ $pp_item->plan_item->deadline_formatted_without_year() }}
                                     </div>
                                 </div>
                                 <div class="col ml-2">

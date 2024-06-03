@@ -5,11 +5,12 @@
     <x-slot name="title">
         <div class="row align-items-center justify-content-beetween">
             <div class="col">
-                Вы уверены что хотите удалить файл "{{ $attachment->file_name }}" навсегда?
+                Удаление файла
             </div>
         </div>
     </x-slot>
     <x-slot name="content">
+        Вы уверены что хотите удалить файл "{{ $attachment->file_name }}" навсегда?
     </x-slot>
     <x-slot name="buttons">
         <button wire:click="yes" class="btn btn-danger btn-icon-split mt-3">

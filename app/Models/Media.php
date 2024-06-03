@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\DatetimeTrait;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia
 {
+    use DatetimeTrait;
     /**
      * Boot events
      * @return void
@@ -29,5 +31,9 @@ class Media extends BaseMedia
     public function uploader()
     {
         return $this->belongsTo('App\Models\User', 'uploaded_by');
+    }
+    public function created_at_diff()
+    {
+        return $this->getDiffHumans($this->created_at);
     }
 }
