@@ -18,6 +18,7 @@
             @include('components.single-attachment', [
                 'attachment' => $version,
                 'can_delete' => false,
+                'with_comment' => false
             ])
         </div>
     </x-slot>

@@ -15,7 +15,7 @@
                         <ul>
                             @foreach ($attachments as $attachment)
                                 <li class="mb-3">
-                                    @include('components.single-attachment', ['attachment' => $attachment->getUrl(), 'can_delete' => $can_attach])
+                                    @include('components.single-attachment', ['attachment' => $attachment, 'can_delete' => $can_attach, 'with_comment' => true])
                                 <hr>
                                 </li>
                             @endforeach

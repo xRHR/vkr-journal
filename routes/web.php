@@ -21,8 +21,16 @@ use App\Http\Controllers\ProfessorController;
 |
 */
 //Route::group(["prefix"=> "vkr-journal"], function () {
+
+    Route::get('/self-register', [UserController::class, 'selfRegisterForm'])->name('selfregisterform');
+    Route::post('/self-register', [UserController::class, 'selfRegister'])->name('selfRegister');
+
+
+
     Route::get('/login', [UserController::class, 'loginForm'])->name('loginForm');
     Route::post('/login', [UserController::class, 'login'])->name('login');
+
+
 
     Route::get('/', function() {
         return redirect(route('redirect.homepage'));
@@ -35,7 +43,11 @@ use App\Http\Controllers\ProfessorController;
             return view('errors.404');
         });
 
+
+
         Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+
 
         Route::get('/profile/{user:id}', [UserController::class, 'userProfile'])->name('profile')->middleware('can:view,user');
 
@@ -43,14 +55,20 @@ use App\Http\Controllers\ProfessorController;
 
         Route::post('/profile/{user:id}/edit', [UserController::class, 'updateProfile'])->name('editProfile')->middleware('can:update,user');
 
+
+
         Route::middleware('can:create,App\Models\User')->group(function () {
             Route::get('/register', [AdminController::class, 'registerForm'])->name('registerForm');
             Route::post('/register', [AdminController::class, 'registerUsers'])->name('register');
 
         });
+
+
         Route::middleware('can:viewAny,App\Models\User')->group(function () {
             Route::get('/user-list', [AdminController::class, 'getUsers'])->name('userList');
         });
+
+
 
         Route::middleware([MustBeAdmin::class])->group(function () {
             Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
@@ -60,6 +78,8 @@ use App\Http\Controllers\ProfessorController;
             });  
         });
 
+
+
         Route::middleware([MustBeStudent::class])->group(function () {
             Route::group(['prefix' => 'student', 'namespace' => 'Student'], function () {
                 Route::get('/', function() {
@@ -67,10 +87,15 @@ use App\Http\Controllers\ProfessorController;
                 })->name('student.index');
             });  
         });
+
+
+
         Route::middleware('can:create,App\Models\Plan')->group(function () {
             Route::get('/plan/create', [ProfessorController::class,'createPlanForm'])->name('createPlanForm');
             Route::post('/plan/create', [ProfessorController::class,'createPlan'])->name('createPlan');
         });
+
+
 
         Route::get('/plan/{plan:id}/edit', [ProfessorController::class, 'editPlanForm'])->name('editPlanForm')->middleware('can:update,plan');
         Route::post('/plan/{plan:id}/edit', [ProfessorController::class,'editPlan'])->name('editPlan')->middleware('can:update,plan');
@@ -101,9 +126,9 @@ use App\Http\Controllers\ProfessorController;
         });
 
         Route::get('/profile/{user:id}/theses', [StudentController::class,'viewTheses'])->name('viewTheses');
-        Route::get('/thesis/{thesis:id}', [StudentController::class,'viewThesis'])->name('viewThesis');
+        Route::get('/theses/{thesis:id}', [StudentController::class,'viewThesis'])->name('viewThesis');
         Route::get('/delete-thesis/{thesis:id}', [StudentController::class,'deleteThesis'])->name('deleteThesis');
 
-        Route::get('/thesis/{thesis:id}/chapter/{order}', [StudentController::class,'viewChapter'])->name('viewChapter');
+        Route::get('/theses/{thesis:id}/chapter/{order}', [StudentController::class,'viewChapter'])->name('viewChapter');
     });
 //});

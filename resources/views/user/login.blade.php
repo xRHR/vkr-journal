@@ -61,12 +61,9 @@
                                         </div>
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Войти">
                                     </form>
-                                    {{-- <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> --}}
+                                        <a class="small" href="{{ route('selfregisterform') }}">Регистрация</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

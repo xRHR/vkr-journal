@@ -140,7 +140,7 @@
                         <form action="{{ route('viewChapter', ['thesis' => $thesis, 'order' => $chapter->order]) }}"
                             method="GET">
                             <button type="submit"
-                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-3 mr-3">
+                                class="btn btn-sm btn-primary shadow-sm mb-3 mr-3">
                                 <i class="fa-solid fa-pen-clip"></i>
                                 К написанию
                             </button>
@@ -149,9 +149,9 @@
                     <p>Номер по порядку: {{ $chapter->order }}</p>
                     @if ($chapter->final_version != null)
                         @include('components.single-attachment', [
-                            'attachment' => $chapter->final_version->getMedia('attachments')[0],
+                            'attachment' => $chapter->final_version,
                             'can_delete' => false,
-                            'attachment_id' => $chapter->final_version->getMedia('attachments')[0]->id,
+                            'with_comment' => false
                         ])
                     @else
                         <p><i>Нет финальной версии</i></p>

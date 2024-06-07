@@ -21,7 +21,7 @@
     <div class="row">
 
         @can('viewAny', App\Models\User::class)
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -41,7 +41,7 @@
 
         @if ($user->status->title == 'Администратор')
 
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         @elseif($user->status->title == 'Научный руководитель')
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -75,7 +75,7 @@
                 </div>
             </div>
         @elseif($user->status->title == 'Студент')
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -93,7 +93,7 @@
             </div>
 
             @if ($user->professor != null)
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-success shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -115,7 +115,7 @@
             @endif
         @else
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -147,7 +147,7 @@
             <span class="text">Посмотреть выполнение</span>
         </a>
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -177,7 +177,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -239,13 +239,19 @@
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
-                <span class="text">Редактировать</span>
+                <span class="text">Редактировать анкету</span>
             </a>
             <button onclick="Livewire.dispatch('openModal', { component: 'change-password-modal', arguments: {user_id: {{ $user->id }}}})" class="btn btn-primary btn-icon-split m-2">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-key"></i>
                 </span>
                 <span class="text">Сменить пароль</span>
+            </button>
+            <button onclick="Livewire.dispatch('openModal', { component: 'change-email-modal', arguments: {user_id: {{ $user->id }}}})" class="btn btn-primary btn-icon-split m-2">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-envelope"></i>
+                </span>
+                <span class="text">Сменить email</span>
             </button>
         @endcan
         @if (

@@ -3,11 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Status;
+use App\Models\UserMiscInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function selfRegisterForm()
+    {
+        return view('user.self-register', ['statuses' => Status::all()]);
+    }
+    public function selfRegister(Request $request)
+    {
+        $incomingFields = $request->validate([
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'patronymic' => 'max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|max:255|min:6|confirmed',
+            'status' => 'required|exists:App\Models\Status,id'
+        ], [
+            'firstname.required' => 'Необходимо заполнить поле "Фамилия"',
+            'lastname.required' => 'Необходимо заполнить поле "Имя"',
+
+            'firstname.max' => 'Фамилия должна содержать не более 255 символов',
+            'lastname.max' => 'Имя должно содержать не более 255 символов',
+            'patronymic.max' => 'Отчество должно содержать не более 255 символов',
+
+            'email.required' => 'Необходимо заполнить поле "Электронная почта"',
+            'email.email' => 'Адрес электронной почты имеет некорректный формат',
+            'email.unique' => 'Пользователь с таким адресом электронной почты уже существует',
+            'email.max' => 'Адрес электронной почты должен содержать не более 255 символов',
+
+            'password.min' => 'Пароль должен содержать не менее 6 символов',
+            'password.required' => 'Необходимо заполнить поле "Пароль"',
+            'password.confirmed' => 'Пароли не совпадают',
+            'password.max' => 'Пароль должен содержать не более 255 символов',
+            
+            'status.required' => 'Необходимо выбрать статус пользователя',
+            'status.exists' => 'Статус пользователя не существует',
+        ]);
+
+        $user = User::create([
+            'firstname' => strip_tags($incomingFields['firstname']),
+            'lastname' => strip_tags($incomingFields['lastname']),
+            'patronymic' => strip_tags($incomingFields['patronymic']),
+            'email' => strip_tags($incomingFields['email']),
+            'password' => $incomingFields['password'],
+            'status_id' => $incomingFields['status']
+        ]);
+        $user_misc_info = new UserMiscInfo();
+        $user_misc_info->user_id = $user->id;
+
+        $user->save();
+        $user_misc_info->save();
+        return redirect()->route('loginForm')->with('success', 'Вы успешно зарегистрировались. Вы можете войти в систему');
+    }
     public function loginForm() {
         if (auth()->check()) {
             return redirect()->route('redirect.homepage');

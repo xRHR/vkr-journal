@@ -26,7 +26,8 @@ class RedirectController extends Controller
             case 'Студент':
                 return redirect()->route('student.index')->with($success ? 'success' : 'failure', $flash_msg);
             case 'Научный руководитель':
-                return redirect()->route('professor.index')->with($success ? 'success' : 'failure', $flash_msg);
+                return redirect()->route('viewStudents', auth()->user()->id)->with($success ? 'success' : 'failure', $flash_msg);
+                //return redirect()->route('professor.index')->with($success ? 'success' : 'failure', $flash_msg);
         }
     }
 }

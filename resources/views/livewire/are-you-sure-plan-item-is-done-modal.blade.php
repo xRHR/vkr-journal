@@ -5,6 +5,11 @@
     <x-slot name="title">
         <div class="row align-items-center justify-content-beetween">
             <div class="col">
+                Выполнение пункта "{{ $plan_progress->plan_item->title }}"
+            </div>
+        </div>
+    </x-slot>
+    <x-slot name="content">
                 @if (auth()->user()->status->title == 'Студент')
                     @if ($plan_progress->confirmed)
                         Вы не можете отметить этот пункт как невыполненный, так как ваш научный руководитель подтвердил
@@ -24,10 +29,6 @@
                         Вы уверены, что хотите подтвердить этот пункт плана как выполненный?
                     @endif
                 @endif
-            </div>
-        </div>
-    </x-slot>
-    <x-slot name="content">
     </x-slot>
     <x-slot name="buttons">
         @if (auth()->user()->status->title == 'Студент' && $plan_progress->confirmed)

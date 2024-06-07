@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Support\Facades\Notification;
 
 class AreYouSurePlanItemIsDoneModal extends ModalComponent
 {
@@ -31,6 +32,10 @@ class AreYouSurePlanItemIsDoneModal extends ModalComponent
                 }
             }
             $this->plan_progress->save();
+
+            $notif = new \App\Notifications\PlanProgress(auth()->user(), $this->plan_progress);
+            Notification::send($this->plan_progress->student, $notif);
+
             $this->closeModal();
             $this->redirect(route('viewPlanProgressItem', ['user' => $this->plan_progress->user_id, 'plan_progress' => $this->plan_progress->id]));
         } else {
@@ -41,8 +46,13 @@ class AreYouSurePlanItemIsDoneModal extends ModalComponent
                 $this->plan_progress->done_at = now();
             }
             $this->plan_progress->save();
+
+            $notif = new \App\Notifications\PlanProgress(auth()->user(), $this->plan_progress);
+            Notification::send($this->plan_progress->student->professor, $notif);
+
             $this->closeModal();
             $this->redirect(route('viewPlanProgressItem', ['user' => $this->plan_progress->user_id, 'plan_progress' => $this->plan_progress->id]));
         }
+        
     }
 }

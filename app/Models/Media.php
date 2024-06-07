@@ -30,7 +30,7 @@ class Media extends BaseMedia
      */
     public function uploader()
     {
-        return $this->belongsTo('App\Models\User', 'uploaded_by');
+        return $this->belongsTo(User::class, 'uploaded_by');
     }
     public function created_at_diff()
     {

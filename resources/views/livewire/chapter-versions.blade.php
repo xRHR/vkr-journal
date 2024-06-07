@@ -7,9 +7,45 @@
                     @else
                     style="background-color: #f8f9fc;" @endif>
 
+                    @if ($version->id == $chapter->final_version_id)
+                        <div class="align-items-center text-center">
+                            <button class="btn btn-icon-split mt-3 btn-success">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-solid fa-check"></i>
+                                </span>
+                                <span class="text">
+                                    Отмечено как финальная версия
+                                </span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if (
+                        $loop->last &&
+                            $version->id != $chapter->final_version_id &&
+                            (auth()->user()->id == $chapter->thesis->professor_id || auth()->user()->id == $chapter->thesis->student_id))
+                        <div class="align-items-center text-center">
+                            <button
+                                onclick="Livewire.dispatch('openModal', { component: 'final-version-modal', arguments: {chapter_id: {{ $chapter->id }}, version_id: {{ $version->id }}}})"
+                                class="btn btn-icon-split mt-3 btn-primary">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-solid fa-file-pen"></i>
+                                </span>
+                                <span class="text">
+                                    @if (auth()->user()->id == $chapter->thesis->professor_id)
+                                        Отметить как финальную версию
+                                    @else
+                                        Номинировать на финальную версию
+                                    @endif
+                                </span>
+                            </button>
+                        </div>
+                    @endif
+
                     @include('components.single-attachment', [
                         'attachment' => $version,
                         'can_delete' => $version->uploaded_by == auth()->user()->id,
+                        'with_comment' => true,
                     ])
                 </div>
             </li>
@@ -22,8 +58,7 @@
                 <div class="text-center">
                     <div x-data="{ uploading: false, progress: 0 }" x-on:livewire-upload-start="uploading = true"
                         x-on:livewire-upload-finish="uploading = false; progress = 0; $wire.addAttachment();"
-                        x-on:livewire-upload-progress="progress = $event.detail.progress"
-                        class="text-center">
+                        x-on:livewire-upload-progress="progress = $event.detail.progress" class="text-center">
                         <label for="inputFile">
                             <div class="text-center">
                                 <div>
@@ -36,7 +71,7 @@
                         </label>
                         <input type="file" name="attachment" id="inputFile" wire:model="newAttachment"
                             style="opacity: 0; position: absolute; z-index: -1;">
-                            <br>
+                        <br>
                         @error('newAttachment')
                             <span class="small text-danger">{{ $message }}</span>
                         @enderror
