@@ -1,3 +1,3 @@
 perm:
-	chown -R xrhr:www-data ./
+	chown -R www-data:www-data ./
 	chmod -R 775 ./

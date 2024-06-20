@@ -24,7 +24,8 @@ class User extends Authenticatable
         'patronymic',
         'email',
         'password',
-        'status_id'
+        'status_id',
+        'professor_id',
     ];
 
     /**
@@ -47,7 +48,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function icon() {
+    public function icon()
+    {
         if ($this->status->title == "Студент") {
             return "fa-solid fa-user-graduate";
         }
@@ -61,34 +63,67 @@ class User extends Authenticatable
         }
 
     }
-    public function fullname() {
+    public function fullname()
+    {
         return $this->lastname . ' ' . $this->firstname . ' ' . $this->patronymic;
     }
-    public function fullnameShort() {
+    public function fullnameGenitive()
+    {
+        return $this->miscInfo->lastname_genitive . ' ' . $this->miscInfo->firstname_genitive . ' ' . $this->miscInfo->patronymic_genitive;
+    }
+    
+    public function fullnameShort()
+    {
         return $this->lastname . ' ' . mb_substr($this->firstname, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.';
     }
-    public function status() {
+    public function status()
+    {
         return $this->belongsTo(Status::class, 'status_id');
     }
 
-    public function miscInfo() {
+    public function miscInfo()
+    {
         return $this->hasOne(UserMiscInfo::class, 'user_id');
     }
+    public function group()
+    {
+        return $this->miscInfo->group();
+    }
 
-    public function professor() {
+    public function specialty()
+    {
+        return $this->group->specialty();
+    }
+
+    public function department()
+    {
+        return $this->specialty->department();
+    }
+
+    public function faculty()
+    {
+        return $this->department->faculty();
+    }
+
+    public function professor()
+    {
         return $this->belongsTo(User::class, 'professor_id');
     }
 
-    public function students() {
+    public function students()
+    {
         return $this->hasMany(User::class, 'professor_id');
     }
-    public function plans() {
-        return $this->hasMany(Plan::class,'owner_id')->where('is_deleted', 0);
+    public function plans()
+    {
+        return $this->hasMany(Plan::class, 'owner_id')->where('is_deleted', 0);
     }
-    public function plan() {
-        return $this->belongsTo(Plan::class,'plan_id');
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
     }
-    public function planProgresses() {
+    public function planProgresses()
+    {
         return $this->hasMany(PlanProgress::class, 'user_id')
             ->join('plan_items', 'plan_progress.plan_item_id', '=', 'plan_items.id')
             ->orderBy('plan_items.deadline', 'asc')
@@ -106,4 +141,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Thesis::class, 'student_id')->where('is_deleted', 0);
     }
+
 }

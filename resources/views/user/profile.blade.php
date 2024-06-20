@@ -21,7 +21,7 @@
     <div class="row">
 
         @can('viewAny', App\Models\User::class)
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -41,7 +41,7 @@
 
         @if ($user->status->title == 'Администратор')
 
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         @elseif($user->status->title == 'Научный руководитель')
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -75,7 +75,7 @@
                 </div>
             </div>
         @elseif($user->status->title == 'Студент')
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -93,7 +93,7 @@
             </div>
 
             @if ($user->professor != null)
-                <div class="col-xl-4 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-success shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -115,7 +115,7 @@
             @endif
         @else
     </div>
-    <div class="col-xl-4 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -147,7 +147,7 @@
             <span class="text">Посмотреть выполнение</span>
         </a>
         <div class="row">
-            <div class="col-xl-6 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -177,7 +177,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -239,19 +239,23 @@
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
-                <span class="text">Редактировать анкету</span>
+                <span class="text">Редактировать</span>
             </a>
-            <button onclick="Livewire.dispatch('openModal', { component: 'change-password-modal', arguments: {user_id: {{ $user->id }}}})" class="btn btn-primary btn-icon-split m-2">
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'change-password-modal', arguments: {user_id: {{ $user->id }}}})"
+                class="btn btn-primary btn-icon-split m-2">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-key"></i>
                 </span>
                 <span class="text">Сменить пароль</span>
             </button>
-            <button onclick="Livewire.dispatch('openModal', { component: 'change-email-modal', arguments: {user_id: {{ $user->id }}}})" class="btn btn-primary btn-icon-split m-2">
+            <button
+                onclick="Livewire.dispatch('openModal', { component: 'change-email-modal', arguments: {user_id: {{ $user->id }}}})"
+                class="btn btn-primary btn-icon-split m-2">
                 <span class="icon text-white-50">
                     <i class="fa-solid fa-envelope"></i>
                 </span>
-                <span class="text">Сменить email</span>
+                <span class="text">Сменить почту</span>
             </button>
         @endcan
         @if (
@@ -307,7 +311,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg6 m-2">
+        <div class="col-lg-4">
             <!-- Collapsable Card Example -->
             <div class="card shadow">
                 <!-- Card Header - Accordion -->
@@ -318,18 +322,14 @@
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="collapseCardExample">
                     <div class="card-body">
-                        <label>Фамилия: {{ $user->lastname }}</label>
-                    </div>
-                    <div class="card-body">
-                        <label>Имя: {{ $user->firstname }}</label>
-                    </div>
-                    <div class="card-body">
-                        <label>Отчество: {{ $user->patronymic }}</label>
+                        <label>Фамилия: {{ $user->lastname }}</label><br>
+                        <label>Имя: {{ $user->firstname }}</label><br>
+                        <label>Отчество: {{ $user->patronymic }}</label><br>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg6 m-2">
+        <div class="col-lg-4">
             <!-- Collapsable Card Example -->
             <div class="card shadow">
                 <!-- Card Header - Accordion -->
@@ -340,17 +340,46 @@
                 <!-- Card Content - Collapse -->
                 <div class="collapse show" id="fioGenitive">
                     <div class="card-body">
-                        <label>Фамилия: {{ $user->miscInfo->lastname_genitive }}</label>
-                    </div>
-                    <div class="card-body">
-                        <label>Имя: {{ $user->miscInfo->firstname_genitive }}</label>
-                    </div>
-                    <div class="card-body">
-                        <label>Отчество: {{ $user->miscInfo->patronymic_genitive }}</label>
+                        <label>Фамилия: {{ $user->miscInfo->lastname_genitive }}</label><br>
+                        <label>Имя: {{ $user->miscInfo->firstname_genitive }}</label><br>
+                        <label>Отчество: {{ $user->miscInfo->patronymic_genitive }}</label><br>
                     </div>
                 </div>
             </div>
         </div>
+        @if ($user->status->title == 'Студент')
+            <div class="col-lg-4">
+                <!-- Collapsable Card Example -->
+                <div class="card shadow">
+                    <!-- Card Header - Accordion -->
+                    <a href="#group" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                        aria-expanded="true" aria-controls="group">
+                        <h6 class="m-0 font-weight-bold text-primary">Группа</h6>
+                    </a>
+                    <!-- Card Content - Collapse -->
+                    <div class="collapse show" id="group">
+                        <div class="card-body">
+                            <label>Номер группы: @if ($user->group)
+                                    {{ $user->group->title }}
+                                @endif
+                            </label><br>
+                            <label>Специальность: @if ($user->group && $user->specialty)
+                                    {{ $user->specialty->title }}
+                                @endif
+                            </label><br>
+                            <label>Кафедра: @if ($user->group && $user->specialty && $user->department)
+                                    {{ $user->department->title }}
+                                @endif
+                            </label><br>
+                            <label>Факультет/Институт: @if ($user->group && $user->specialty && $user->department && $user->faculty)
+                                    {{ $user->faculty->title }}
+                                @endif
+                            </label><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 
 @endsection

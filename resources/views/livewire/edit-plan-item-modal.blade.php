@@ -18,7 +18,7 @@
             <div class="form-group col">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Пункты плана</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Пункт плана</h6>
                     </div>
                     <div class="card-body">
                         <label class="mt-3">Название пункта</label>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </form>
-        <livewire:attachments_card attachable_type="{{ $plan_item->getMorphClass() }}" attachable_id="{{ $plan_item ? $plan_item->id : -1 }}" can_attach="true"/>
+        <livewire:attachments_card attachable_type="\App\Models\PlanItem" attachable_id="{{ $plan_item ? $plan_item->id : -1 }}" can_attach="true"/>
     </x-slot>
     <x-slot name="buttons">
         <div class="form-group">

@@ -34,13 +34,18 @@
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
+                        <div class="sidebar-brand-icon text-center">
+                            <img src="/bsu-logo-250px.png" class="w-25" alt="Бурятский государственный университет имени Доржи Банзарова">
+                            <br>Бурятский государcтвенный университет
+                            <br>имени Доржи Банзарова
+                        </div>
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             @include('components.flash-message')
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Добро Пожаловать!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Добро Пожаловать в Журнал ВКР</h1>
                                     </div>
                                     <form class="user" action="{{ route('login') }}" method="POST">
                                         @csrf

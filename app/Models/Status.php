@@ -9,5 +9,13 @@ class Status extends Model
 {
     use HasFactory;
 
-    //protected $table = 'statuses'; 
+    public function icon()
+    {
+        if ($this->title == 'Администратор')
+            return 'fas fa-user-shield';
+        else if ($this->title == 'Научный руководитель')
+            return 'fas fa-user-tie';
+        else
+            return 'fas fa-user-graduate';
+    }
 }

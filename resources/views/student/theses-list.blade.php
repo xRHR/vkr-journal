@@ -33,12 +33,14 @@
                     <thead>
                         <tr>
                             <th>Название</th>
+                            <th>Дата защиты</th>
                             <th>Руководитель</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Название</th>
+                            <th>Дата защиты</th>
                             <th>Руководитель</th>
                         </tr>
                     </tfoot>
@@ -46,6 +48,7 @@
                         @foreach ($user->theses as $thesis)
                             <tr>
                                 <td><a href="{{ route('viewThesis', ['thesis' => $thesis]) }}">{{ $thesis->title }}</a></td>
+                                <td>@if ($thesis->defense_date){{ date('d.m.Y', strtotime($thesis->defense_date)) }}@endif</td>
                                 <td><a href="{{ route('profile', $thesis->professor_id) }}">{{ $thesis->professor->fullnameShort() }}</a>
                                 </td>
                             </tr>

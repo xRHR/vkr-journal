@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Thesis extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'student_id', 'professor_id'];
+    protected $fillable = ['title', 'description', 'student_id', 'professor_id', 'defense_date'];
 
     public function student()
     {
@@ -23,5 +23,9 @@ class Thesis extends Model
     public function chapters()
     {
         return $this->hasMany(Chapter::class);
+    }
+    public function documents()
+    {
+        return $this->hasMany(ThesisDocument::class);
     }
 }

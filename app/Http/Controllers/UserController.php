@@ -89,7 +89,7 @@ class UserController extends Controller
         return view('user.profile', ['user' => $user]);
     }
     public function editProfile(User $user) {
-        return view('user.edit-profile', ['user' => $user]);        
+        return view('user.edit-profile', ['user' => $user, 'groups' => \App\Models\Group::all()]);        
     }
     public function updateProfile(Request $request, User $user) {
         $incomingFields = $request->only([
@@ -98,7 +98,8 @@ class UserController extends Controller
             'patronymic',
             'firstname_genitive',
             'lastname_genitive',
-            'patronymic_genitive'
+            'patronymic_genitive',
+            'group'
         ]);
 
         $user->firstname = strip_tags($incomingFields['firstname']);
@@ -108,6 +109,8 @@ class UserController extends Controller
         $user->miscInfo->firstname_genitive = strip_tags($incomingFields['firstname_genitive']);
         $user->miscInfo->lastname_genitive = strip_tags($incomingFields['lastname_genitive']);
         $user->miscInfo->patronymic_genitive = strip_tags($incomingFields['patronymic_genitive']);
+
+        $user->miscInfo->group_id = $incomingFields['group'];
 
         $user->save();
         $user->miscInfo->save();

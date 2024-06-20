@@ -34,6 +34,11 @@
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
+                        <div class="sidebar-brand-icon text-center">
+                            <img src="/bsu-logo-250px.png" class="w-25" alt="Бурятский государственный университет имени Доржи Банзарова">
+                            <br>Бурятский государcтвенный университет
+                            <br>имени Доржи Банзарова
+                        </div>
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             @include('components.flash-message')

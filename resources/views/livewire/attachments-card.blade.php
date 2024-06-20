@@ -1,10 +1,10 @@
 <div class="form-group col">
     <div class="card shadow mb-4">
-        <a href="#{{ class_basename($attachable) . $attachable->id . "AttachmentsCard" }}" class="d-block card-header py-3" data-toggle="collapse" role="button"
-            aria-expanded="true" aria-controls="{{ class_basename($attachable) . $attachable->id . "AttachmentsCard" }}">
+        <a href="#{{ class_basename($attachable) . ($attachable->id ?? 'New') . "AttachmentsCard" }}" class="d-block card-header py-3" data-toggle="collapse" role="button"
+            aria-expanded="true" aria-controls="{{ class_basename($attachable) . ($attachable->id ?? 'New') . "AttachmentsCard" }}">
             <h6 class="m-0 font-weight-bold text-primary">{{ $card_title }}</h6>
         </a>
-        <div class="collapse show" id="{{ class_basename($attachable) . $attachable->id . "AttachmentsCard" }}">
+        <div class="collapse show" id="{{ class_basename($attachable) . ($attachable->id ?? 'New') . "AttachmentsCard" }}">
             <div class="card-body">
                 @if (!$model_exists)
                     <p><i>Вложения недоступны. Создайте объект перед добавлением вложений</i></p>

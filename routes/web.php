@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\StudentController;
 use App\Http\Middleware\MustBeAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\MustBeStudent;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\MustBeProfessor;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ProfessorController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,9 @@ use App\Http\Controllers\ProfessorController;
             return view('errors.404');
         });
 
-
+        Route::get('/welcome', function() {
+            return view('welcome');
+        })->name('welcome');
 
         Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -58,8 +62,8 @@ use App\Http\Controllers\ProfessorController;
 
 
         Route::middleware('can:create,App\Models\User')->group(function () {
-            Route::get('/register', [AdminController::class, 'registerForm'])->name('registerForm');
-            Route::post('/register', [AdminController::class, 'registerUsers'])->name('register');
+            Route::get('/register/{chosen_status?}', [RegistrationController::class, 'registerForm'])->name('registerForm');
+            Route::post('/register', [RegistrationController::class, 'register'])->name('register');
 
         });
 
@@ -126,7 +130,15 @@ use App\Http\Controllers\ProfessorController;
         });
 
         Route::get('/profile/{user:id}/theses', [StudentController::class,'viewTheses'])->name('viewTheses');
+
         Route::get('/theses/{thesis:id}', [StudentController::class,'viewThesis'])->name('viewThesis');
+        
+        Route::get('/theses/{thesis:id}/request-letter', [StudentController::class,'viewThesisRequest'])->name('viewThesisRequest');
+        Route::post('/theses/{thesis:id}/request-letter', [DocumentController::class,'ThesisRequestLetter'])->name('ThesisRequestLetter');
+        
+        Route::get('/theses/{thesis:id}/review', [StudentController::class,'viewThesisReview'])->name('viewThesisReview');
+        Route::post('/theses/{thesis:id}/review', [DocumentController::class,'ThesisReview'])->name('ThesisReview');
+
         Route::get('/delete-thesis/{thesis:id}', [StudentController::class,'deleteThesis'])->name('deleteThesis');
 
         Route::get('/theses/{thesis:id}/chapter/{order}', [StudentController::class,'viewChapter'])->name('viewChapter');

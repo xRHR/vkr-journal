@@ -27,6 +27,10 @@
                 Научный руководитель
             </label>
             <input type="text" name="professor" class="form-control" value="{{ $user->professor ? $user->professor->fullnameShort() : '' }}" disabled>
+            <label>
+                Дата защиты
+            </label>
+            <input type="date" name="defense_date" wire:model="defense_date" class="form-control mb-3">
         </div>
     </x-slot>
     <x-slot name="buttons">

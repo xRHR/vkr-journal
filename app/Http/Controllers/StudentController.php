@@ -37,4 +37,12 @@ class StudentController extends Controller
     {
         return view('student.chapter', ['thesis' => $thesis, 'chapter' => $thesis->chapters()->where('order', $order)->first()]);
     }
+    public function viewThesisRequest(Request $request, Thesis $thesis)
+    {
+        return view('documents.thesis-request', ['thesis' => $thesis]);
+    }
+    public function viewThesisReview(Request $request, Thesis $thesis)
+    {
+        return view('documents.thesis-review', ['thesis' => $thesis]);
+    }
 }

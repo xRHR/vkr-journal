@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('redirect.homepage') }}">
         <div class="sidebar-brand-icon">
-            <img src="/vkr-journal-logo.png" class="w-75">
+            <img src="/bsu-logo-100px.png" class="w-75" alt="Лого БГУ">
         </div>
         <div class="sidebar-brand-text mx-3">Журнал ВКР</div>
     </a>

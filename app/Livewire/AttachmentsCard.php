@@ -27,7 +27,7 @@ class AttachmentsCard extends Component
         $this->cnt++;
         $this->attachments = $this->attachable->getMedia('attachments');
     }
-    public function mount($attachable_type, $attachable_id, $can_attach, $card_title = 'Вложения')
+    public function mount($attachable_type, $attachable_id = -1, $can_attach, $card_title = 'Вложения')
     {
         $this->cnt = 0;
         if ($attachable_id == -1) {
